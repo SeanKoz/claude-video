@@ -7,9 +7,11 @@ then Reads each frame path to see the video.
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 import tempfile
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -19,6 +21,27 @@ from download import download, is_url  # noqa: E402
 from frames import MAX_FPS, auto_fps, auto_fps_focus, extract, format_time, get_metadata, parse_time  # noqa: E402
 from transcribe import filter_range, format_transcript, parse_vtt  # noqa: E402
 from whisper import load_api_key, transcribe_video  # noqa: E402
+
+
+def _youtube_video_id(source: str) -> str | None:
+    parsed = urlparse(source)
+    host = (parsed.netloc or "").lower()
+    path = parsed.path or ""
+    if host in {"youtu.be", "www.youtu.be"}:
+        return path.lstrip("/") or None
+    if host.endswith("youtube.com"):
+        values = parse_qs(parsed.query).get("v", [])
+        return values[0] if values and values[0] else None
+    return None
+
+
+def transcript_filename_for_source(source: str) -> str:
+    video_id = _youtube_video_id(source)
+    if video_id:
+        safe_video_id = re.sub(r"[^A-Za-z0-9_-]", "", video_id)
+        if safe_video_id:
+            return f"yt-{safe_video_id}.md"
+    return "transcript.md"
 
 
 def main() -> int:
@@ -144,6 +167,11 @@ def main() -> int:
             )
 
     info = dl.get("info") or {}
+    transcript_path: Path | None = None
+    if transcript_text:
+        transcript_path = work / transcript_filename_for_source(args.source)
+        transcript_path.write_text(transcript_text + "\n", encoding="utf-8")
+        print(f"[watch] transcript saved: {transcript_path}", file=sys.stderr)
 
     print()
     print("# watch: video report")
@@ -198,6 +226,9 @@ def main() -> int:
     print()
     print("## Transcript")
     print()
+    if transcript_path:
+        print(f"Saved markdown: `{transcript_path}`")
+        print()
     if transcript_text:
         label = transcript_source or "captions"
         if focused:
