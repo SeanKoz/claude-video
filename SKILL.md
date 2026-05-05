@@ -80,7 +80,7 @@ Optional flags:
 - `--max-frames N` — lower the cap for tighter token budget (e.g. `--max-frames 40`)
 - `--resolution W` — change frame width in px (default 512; bump to 1024 only if the user needs to read on-screen text)
 - `--fps F` — override auto-fps (clamped to 2 fps max)
-- `--out-dir DIR` — keep working files somewhere specific (default: an auto-generated tmp dir)
+- `--out-dir DIR` — use this exact working directory (default: a unique `watch-*` folder under `~/yt-videos`, created if needed)
 - `--whisper groq|openai` — force a specific Whisper backend (default: prefer Groq if both keys exist)
 - `--no-whisper` — disable the Whisper fallback entirely (frames-only if no captions)
 
@@ -158,7 +158,7 @@ If you already watched a video this session and the user asks a follow-up, do **
 - Runs `ffmpeg` / `ffprobe` locally to extract frames as JPEGs and, when Whisper is needed, a mono 16 kHz audio clip
 - Sends the extracted audio clip to Groq's Whisper API (`api.groq.com/openai/v1/audio/transcriptions`) when `GROQ_API_KEY` is set (preferred — cheaper, faster)
 - Sends the extracted audio clip to OpenAI's audio transcription API (`api.openai.com/v1/audio/transcriptions`) when `OPENAI_API_KEY` is set and Groq is not, or when `--whisper openai` is forced
-- Writes the downloaded video, frames, audio, and transcript markdown to a working directory under the system temp dir (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`.
+- Writes the downloaded video, frames, audio, and transcript markdown to a working directory under `~/yt-videos/watch-*` by default (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`.
 - Reads / creates `~/.config/watch/.env` (mode `0600`) to store the Whisper API key(s) and a `SETUP_COMPLETE` marker. As a fallback, also reads `.env` in the current working directory
 
 **What this skill does NOT do:**
@@ -166,7 +166,7 @@ If you already watched a video this session and the user asks a follow-up, do **
 - Does not access any platform account (no login, no session cookies, no posting)
 - Does not share API keys between providers (Groq key only goes to `api.groq.com`, OpenAI key only goes to `api.openai.com`)
 - Does not log, cache, or write API keys to stdout, stderr, or output files
-- Does not persist anything outside the working directory and `~/.config/watch/.env` — clean up the working directory when you're done (Step 5)
+- Does not persist anything outside the working directory (default under `~/yt-videos`), `~/.config/watch/.env`, and the created `~/yt-videos` folder when used — clean up the per-run working directory when you're done (Step 5)
 
 **Bundled scripts:** `scripts/watch.py` (entry point), `scripts/download.py` (yt-dlp wrapper), `scripts/frames.py` (ffmpeg frame extraction), `scripts/transcribe.py` (caption selection + Whisper orchestration), `scripts/whisper.py` (Groq / OpenAI clients), `scripts/setup.py` (preflight + installer)
 

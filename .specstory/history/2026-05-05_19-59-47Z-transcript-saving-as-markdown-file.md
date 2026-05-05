@@ -479,3 +479,1260 @@ _**Agent (default)**_
 <summary>Tool use: **edit_file_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (default)**_
+
+I’ve implemented transcript save logic in `watch.py` with YouTube-aware naming. Next I’m adding tests in `test/` that verify filename derivation and that running `main()` both writes the markdown file and still prints transcript content.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_watch_transcript_output.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/README.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md",
+  "pattern": "intermediate transcript|prints frame paths|transcript"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md",
+  "pattern": "intermediate transcript|prints frame paths|transcript",
+  "topFiles": [
+    {
+      "matchCount": 11,
+      "uri": "SKILL.md"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 11
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/commands/watch.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/commands/watch.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write">
+<details>
+<summary>Tool use: **todo_write**</summary>
+
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Implement transcript markdown file write in watch flow while preserving stdout transcript output",
+      "id": "watch-save-md",
+      "status": "completed"
+    },
+    {
+      "content": "Add YouTube URL videoId parsing and yt-\u003cvideoId\u003e.md naming with safe fallback",
+      "id": "youtube-naming",
+      "status": "completed"
+    },
+    {
+      "content": "Update SKILL.md and commands/watch.md to document markdown transcript output and naming",
+      "id": "docs-update",
+      "status": "completed"
+    },
+    {
+      "content": "Add tests under test/ plus test/README.md for run instructions and expected behaviors",
+      "id": "tests-and-readme",
+      "status": "completed"
+    },
+    {
+      "content": "Run tests and verify transcript file path/output behavior end-to-end",
+      "id": "run-validation",
+      "status": "in_progress"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Implement transcript markdown file write in watch flow while preserving stdout transcript output",
+      "id": "watch-save-md",
+      "status": "in_progress"
+    },
+    {
+      "content": "Add YouTube URL videoId parsing and yt-\u003cvideoId\u003e.md naming with safe fallback",
+      "id": "youtube-naming",
+      "status": "pending"
+    },
+    {
+      "content": "Update SKILL.md and commands/watch.md to document markdown transcript output and naming",
+      "id": "docs-update",
+      "status": "pending"
+    },
+    {
+      "content": "Add tests under test/ plus test/README.md for run instructions and expected behaviors",
+      "id": "tests-and-readme",
+      "status": "pending"
+    },
+    {
+      "content": "Run tests and verify transcript file path/output behavior end-to-end",
+      "id": "run-validation",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Core code and docs changes are in. I’m running the new test suite now to validate filename logic and markdown save behavior end-to-end.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: python3 -m unittest discover -s test</summary>
+
+```bash
+python3 -m unittest discover -s test
+```
+
+```
+..[watch] working dir: /private/var/folders/tk/jcz8m9ns53l5j15vpr7dbvbh0000gn/T/watch-test-b_2a28ix
+[watch] downloading via yt-dlp…
+[watch] extracting ~10 frames at 2.000 fps over full 5.0s…
+[watch] transcript saved: /private/var/folders/tk/jcz8m9ns53l5j15vpr7dbvbh0000gn/T/watch-test-b_2a28ix/yt-epzzALZ8oYo.md
+.
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py",
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_watch_transcript_output.py",
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md",
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/commands/watch.md"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py"
+    },
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_watch_transcript_output.py"
+    },
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md"
+    },
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/commands/watch.md"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write">
+<details>
+<summary>Tool use: **todo_write**</summary>
+
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Implement transcript markdown file write in watch flow while preserving stdout transcript output",
+      "id": "watch-save-md",
+      "status": "completed"
+    },
+    {
+      "content": "Add YouTube URL videoId parsing and yt-\u003cvideoId\u003e.md naming with safe fallback",
+      "id": "youtube-naming",
+      "status": "completed"
+    },
+    {
+      "content": "Update SKILL.md and commands/watch.md to document markdown transcript output and naming",
+      "id": "docs-update",
+      "status": "completed"
+    },
+    {
+      "content": "Add tests under test/ plus test/README.md for run instructions and expected behaviors",
+      "id": "tests-and-readme",
+      "status": "completed"
+    },
+    {
+      "content": "Run tests and verify transcript file path/output behavior end-to-end",
+      "id": "run-validation",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Implement transcript markdown file write in watch flow while preserving stdout transcript output",
+      "id": "watch-save-md",
+      "status": "completed"
+    },
+    {
+      "content": "Add YouTube URL videoId parsing and yt-\u003cvideoId\u003e.md naming with safe fallback",
+      "id": "youtube-naming",
+      "status": "completed"
+    },
+    {
+      "content": "Update SKILL.md and commands/watch.md to document markdown transcript output and naming",
+      "id": "docs-update",
+      "status": "completed"
+    },
+    {
+      "content": "Add tests under test/ plus test/README.md for run instructions and expected behaviors",
+      "id": "tests-and-readme",
+      "status": "completed"
+    },
+    {
+      "content": "Run tests and verify transcript file path/output behavior end-to-end",
+      "id": "run-validation",
+      "status": "in_progress"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Implemented exactly as planned, without touching the plan file.
+
+What changed:
+
+- Updated `scripts/watch.py` to persist transcript markdown in the working directory when transcript text exists.
+- Kept full transcript output to stdout unchanged.
+- Added YouTube-aware filename logic:
+  - `https://www.youtube.com/watch?v=epzzALZ8oYo` -> `yt-epzzALZ8oYo.md`
+  - non-YouTube (or missing `v`) -> `transcript.md`
+- Added a report line in output under Transcript section:
+  - `Saved markdown: <path>`
+- Logged save path to stderr:
+  - `[watch] transcript saved: <path>`
+
+Docs updated:
+
+- `SKILL.md` now states transcript is saved as markdown and documents naming behavior.
+- `commands/watch.md` now includes the markdown save step and naming rules.
+
+Tests added (in `test/`, as requested):
+
+- `test/test_watch_transcript_output.py`
+  - validates YouTube filename derivation
+  - validates non-YouTube fallback filename
+  - validates `watch.main()` writes markdown file and still prints transcript text to stdout
+- `test/README.md`
+  - includes test run instructions
+
+Validation run:
+
+- Executed: `python3 -m unittest discover -s test`
+- Result: 3 tests run, all passed (`OK`)
+
+All existing to-dos are now marked completed.
+
+---
+
+_**User**_
+
+Did we update the README.md
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking Git Status**
+
+I need to provide a concise answer, so I should verify by checking the Git diff status. Should I use the shell? It seems like I might want to set it to read-only. Doing a quick `rg` could be helpful as well. I’ll check if the README changed — perhaps calling the shell with `git status --short` and `rg` to streamline the process. Let's focus on doing one shell command for clarity.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: git status --short</summary>
+
+```bash
+git status --short
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+**Clarifying README updates**
+
+I’m noting that the user is looking for updates to the README file. It seems like they might be referring to the root README.md, but I added test/README.md instead. So, I need to be clear in my response that I’ll focus on the relevant files. I should clarify the differences and make sure to give a helpful answer that addresses their request effectively!</details></think>
+
+_**Agent (default)**_
+
+No — the root `README.md` was not updated.
+
+I added a new `test/README.md` (for running tests), and updated:
+
+- `scripts/watch.py`
+- `SKILL.md`
+- `commands/watch.md`
+- `test/test_watch_transcript_output.py`
+
+---
+
+_**User**_
+
+Do I need to do anything different when calling the skill /watch:watch URL ?
+
+---
+
+_**Agent (default)**_
+
+No changes needed to how you call it.
+
+Use it the same way:
+
+- `/watch:watch <URL>`  
+- or `/watch:watch <URL> <question>`
+
+What’s new is automatic output behavior:
+
+- It still prints the transcript in the report.
+- It now also saves a markdown file in the working directory:
+  - YouTube URL with `v=...` -> `yt-<videoId>.md`
+  - Everything else -> `transcript.md`
+
+So you don’t need any new flags or syntax.
+
+---
+
+_**User**_
+
+Where is the file being saved?
+
+---
+
+_**Agent (default)**_
+
+In the `watch.py` working directory (`work`), which is:
+
+- Auto temp dir by default (it prints as `Work dir: ...` at the end), or
+- Whatever you pass via `--out-dir`
+
+Filename inside that directory is:
+
+- `yt-<videoId>.md` for YouTube URLs with a `v` param
+- `transcript.md` for non-YouTube URLs (or missing `v`)
+
+---
+
+_**User**_
+
+This is not saving the transcript 
+
+---
+
+_**Agent (default)**_
+
+I’ll debug this directly by checking the current `watch.py` logic in your repo and then reproducing a run to see why the markdown file isn’t being written.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: python3 -m unittest discover -s test</summary>
+
+```bash
+python3 -m unittest discover -s test
+```
+
+```
+..[watch] working dir: /private/var/folders/tk/jcz8m9ns53l5j15vpr7dbvbh0000gn/T/watch-test-pse5cy7q
+[watch] downloading via yt-dlp…
+[watch] extracting ~10 frames at 2.000 fps over full 5.0s…
+[watch] transcript saved: /private/var/folders/tk/jcz8m9ns53l5j15vpr7dbvbh0000gn/T/watch-test-pse5cy7q/yt-epzzALZ8oYo.md
+.
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+**Verifying build script**
+
+I need to check if the build script copies files to the /.claude/plugins/cache directory. It seems important to confirm this for proper functioning. I’ll quickly go through the build-skill.sh file to see what it does. I have to make sure it's set up correctly; otherwise, things might not work as expected. It’s always good to double-check script functionalities, just to be safe!</details></think>
+
+_**Agent (default)**_
+
+I confirmed the code is writing correctly in this repo; likely blocker is that `/watch:watch` is still running the installed cached skill version, not this source checkout. I’m checking the build/install script path next so we can sync your edited version.
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/build-skill.sh</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/cache/claude-video/watch/0.1.2/scripts/watch.py</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: git status --short</summary>
+
+```bash
+git status --short
+```
+
+```
+ M .specstory/history/2026-05-05_19-59-47Z-transcript-saving-as-markdown-file.md
+ M .specstory/statistics.json
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+**Considering editing actions**
+
+I'm thinking about whether I should edit outside the workspace. It seems likely okay, especially with ReadFile, but the user didn’t specifically ask for an edit. Maybe I should provide an explanation and ask if they want me to sync the cache now. I could do it quickly, but I’m also considering recommending a manual approach, like bumping the plugin version and reinstalling the marketplace plugin, which might not be trivial. It's worth inspecting the manifest to understand the source for plugin commands better.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/.claude-plugin/plugin.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/.claude-plugin/marketplace.json</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+**Checking cache status**
+
+I'm making sure to provide a concise response. I checked both paths, and I found that the cache is still old due to the missing transcript save block. For next steps, it seems I should cite the file paths, so I should format those with backticks. I want to ensure the user has clear guidance moving forward. Let's get this resolved!</details></think>
+
+_**Agent (default)**_
+
+You’re right — I found the issue.
+
+`/watch:watch` is using the installed cached skill at:
+
+- `~/.claude/plugins/cache/claude-video/watch/0.1.2/scripts/watch.py`
+
+That file is still the old version (it does **not** include the transcript write logic).  
+Your repo copy at:
+
+- `~/.claude/plugins/marketplaces/claude-video/scripts/watch.py`
+
+does include the save code.
+
+So right now your invocation is likely hitting cache, not your edited marketplace source.
+
+### How to confirm quickly
+In `/watch` output, if you **don’t** see:
+- `[watch] transcript saved: ...` (stderr)
+- `Saved markdown: ...` (report body)
+
+then it’s running old code.
+
+### Fix
+Refresh/reinstall the skill so cache picks up your latest files (or bump plugin version and reinstall).  
+If you want, I can do the sync for you now by updating the cached `watch.py` to match this repo version.
+
+---
+
+_**User**_
+
+Is there a way to invalidate the cache?  Can I delete it?
+
+---
+
+_**Agent (default)**_
+
+Yes — you can delete the cached copy safely.
+
+For your case, remove this directory:
+
+- `~/.claude/plugins/cache/claude-video/watch/0.1.2`
+
+Then run `/watch` again; it should rebuild/reload from the source install path.
+
+If you want to be more aggressive, you can remove:
+
+- `~/.claude/plugins/cache/claude-video`
+
+That forces all cached versions for this plugin to refresh.
+
+Recommended sequence:
+
+1. Delete cache folder(s)
+2. Re-run `/watch:watch <url>`
+3. Confirm output now includes `Saved markdown: ...`
+
+If it still uses old behavior after cache delete, bump the plugin version in `.claude-plugin/plugin.json` (e.g. `0.1.3`) and reload/reinstall the plugin so it cannot reuse stale versioned cache.
+
+---
+
+_**User**_
+
+whats the bash command
+
+---
+
+_**Agent (default)**_
+
+```bash
+rm -rf ~/.claude/plugins/cache/claude-video/watch/0.1.2
+```
+
+Or clear all cached versions for this plugin:
+
+```bash
+rm -rf ~/.claude/plugins/cache/claude-video
+```
+
+---
+
+_**User**_
+
+What dir is the file being saved to
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Files are saved in the project's designated directory or folder.</details></think>
+
+_**Agent (default)**_
+
+The transcript `.md` is written in the **watch working directory** — the same folder printed as `_Work dir: \`<path>\`_` at the end of the report (or at startup as `[watch] working dir: <path>` on stderr).
+
+By default that’s a **new temp folder** named like `watch-xxxxx` under your system temp directory. If you pass `--out-dir DIR`, it’s **`DIR`** (resolved to an absolute path).
+
+Inside that folder you’ll see either `yt-<videoId>.md` or `transcript.md` at the **top level** (not under `download/` or `frames/`).
+
+---
+
+_**User**_
+
+What is the path of this folder
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+**Considering Mac temperature command**
+
+I need to provide a direct answer but can only mention the unknown exact path until I run the command. I’ll suggest checking the typical Mac temp using tempfile.mkdtemp with a "watch-" prefix in /var/folders. The user is asking for the path of this folder, which I might not know from the current run. I’ll be concise in my explanation to ensure clarity!</details></think>
+
+_**Agent (default)**_
+
+It’s dynamic per run, so there isn’t one fixed path.
+
+On your Mac, it will be a temp dir like:
+
+- `/private/var/folders/.../T/watch-<random>`
+
+You can always get the exact one from `/watch` output:
+
+- stderr: `[watch] working dir: <full-path>`
+- report footer: `_Work dir: \`<full-path>\`_`
+
+If you want a fixed path, run with `--out-dir`, e.g. `--out-dir ~/watch-output`.
+
+---
+
+_**User**_
+
+Where is the prompt that tells us how to summarize this video?
+
+---
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+The instructions for how to answer or summarize after watching are in the skill doc **[`SKILL.md`](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md)**, under **Step 4 — answer the user**:
+
+```118:122:/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md
+**Step 4 — answer the user.** You now have two streams of evidence:
+- **Frames** — what's on screen at each timestamp
+- **Transcript** — what's said at each timestamp. The report's header shows the source (`captions` = yt-dlp pulled native subs; `whisper (groq)` or `whisper (openai)` = transcribed by API).
+
+If the user asked a specific question, answer it directly citing timestamps. If they didn't ask anything, summarize what happens in the video — structure, key moments, notable visuals, spoken content.
+```
+
+[`commands/watch.md`](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/commands/watch.md) only tells the agent to follow the full pipeline in `SKILL.md`; it doesn’t repeat the summarize wording.
+
+---
+
+_**User**_
+
+Change the root file save location to a folder named yt-videos in the uses home directory.  If it does not exist create it.
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to modify the root file save location for the watch script to `~/yt-videos` in the user's home directory.</details></think>
+
+_**Agent (default)**_
+
+Checking how the working directory is chosen so we can plan the change.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video",
+  "pattern": "out-dir|work|mkdtemp"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video",
+  "pattern": "out-dir|work|mkdtemp",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "scripts/download.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "scripts/build-skill.sh"
+    },
+    {
+      "matchCount": 1,
+      "uri": "scripts/frames.py"
+    },
+    {
+      "matchCount": 2,
+      "uri": "scripts/setup.py"
+    },
+    {
+      "matchCount": 11,
+      "uri": "scripts/watch.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": ".gitattributes"
+    },
+    {
+      "matchCount": 1,
+      "uri": "commands/watch.md"
+    },
+    {
+      "matchCount": 9,
+      "uri": "README.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "scripts/whisper.py"
+    },
+    {
+      "matchCount": 19,
+      "uri": ".specstory/history/2026-05-05_19-59-47Z-transcript-saving-as-markdown-file.md"
+    },
+    {
+      "matchCount": 6,
+      "uri": "SKILL.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/.project.json"
+    },
+    {
+      "matchCount": 6,
+      "uri": "test/test_watch_transcript_output.py"
+    }
+  ],
+  "totalFiles": 13,
+  "totalMatches": 61
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants the default root directory to be set to `~/yt-videos`. Critical design choice for directory handling:
+
+- Setting `work` directly to `~/yt-videos` causes overwrites on each run.
+- Better approach uses `base = Path.home() / "yt-videos"` with `base.mkdir(parents=True, exist_ok=True)` and `tempfile.mkdtemp(prefix="watch-", dir=str(base))` for per-run isolation.
+- For YouTube: use `work = base / f"yt-{id}"` or `work = base / safe_video_id`, though re-runs may overwrite.
+- Proposal: default base as `Path.home() / "yt-videos"` with per-run subdirectories to avoid conflicts.</details></think>
+
+_**Agent (default)**_
+
+Default today: `tempfile.mkdtemp(prefix="watch-")` under the system temp dir when `--out-dir` is omitted. We'll plan `~/yt-videos` as the parent and keep per-run subfolders to avoid collisions.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="create_plan">
+<details>
+<summary>Tool use: **create_plan**</summary>
+
+
+Parameters:
+
+```json
+{
+  "name": "Default save yt-videos",
+  "overview": "Use &#96;~/yt-videos&#96; as the default parent directory for watch runs (create if missing), with each run still using a unique subfolder under it. &#96;--out-dir&#96; remains an override. Update docs and tests as needed.",
+  "plan": "# Default work dir under ~/yt-videos\n\n## Behavior change\n\nIn [&#96;scripts/watch.py&#96;](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py), replace the no-&#96;--out-dir&#96; branch:\n\n- Today: &#96;work = Path(tempfile.mkdtemp(prefix=\"watch-\"))&#96; (system temp).\n- New:\n  - &#96;root = Path.home() / \"yt-videos\"&#96;\n  - &#96;root.mkdir(parents=True, exist_ok=True)&#96;\n  - &#96;work = Path(tempfile.mkdtemp(prefix=\"watch-\", dir=str(root)))&#96;\n\nSo the **root** for artifacts is always &#96;~/yt-videos&#96; by default, and each invocation gets a unique child like &#96;~/yt-videos/watch-xxxxx&#96; (same layout as today: &#96;download/&#96;, &#96;frames/&#96;, transcript &#96;.md&#96; at top of &#96;work&#96;).\n\n**&#96;--out-dir&#96;:** unchanged — if set, &#96;work&#96; is exactly that path (expanded/resolved); no forced parent under &#96;yt-videos&#96;.\n\n## Docs\n\n- [&#96;SKILL.md&#96;](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md): replace mentions of “system temp dir” / “auto-generated tmp dir” for the default with &#96;~/yt-videos&#96; and note unique &#96;watch-*&#96; subfolders.\n- [&#96;README.md&#96;](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/README.md): align “temp working directory” wording with the new default (and keep &#96;--out-dir&#96; as override).\n\n## Tests\n\n- [&#96;test/test_watch_transcript_output.py&#96;](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_watch_transcript_output.py) already passes &#96;--out-dir&#96;; no change required for that case.\n- Add a focused test that mocks &#96;Path.home()&#96; and &#96;tempfile.mkdtemp&#96; to assert:\n  - &#96;root.mkdir(parents=True, exist_ok=True)&#96; behavior is triggered (or equivalently: &#96;mkdtemp&#96; is called with &#96;dir&#96; set to the mocked home’s &#96;yt-videos&#96;).\n- Update [&#96;test/README.md&#96;](/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/README.md) only if new test needs a one-line note (optional).\n\n## Validation\n\nRun &#96;python3 -m unittest discover -s test&#96; from repo root.\n",
+  "todos": [
+    {
+      "content": "Implement ~/yt-videos root + mkdtemp subdir in watch.py when --out-dir omitted",
+      "id": "watch-default-root",
+      "status": "pending"
+    },
+    {
+      "content": "Update SKILL.md and README.md default path wording",
+      "id": "docs-yt-videos",
+      "status": "pending"
+    },
+    {
+      "content": "Add unittest for default dir = home/yt-videos + mkdtemp dir kwarg",
+      "id": "test-default-root",
+      "status": "pending"
+    },
+    {
+      "content": "Run unittest suite",
+      "id": "run-tests",
+      "status": "pending"
+    }
+  ]
+}
+```
+Additional data:
+
+```json
+{
+  "hasOpenedEditor": true,
+  "planId": "default_save_yt-videos_f1ce3f69",
+  "planUri": "file:///Users/seankozlowski/.cursor/plans/default_save_yt-videos_f1ce3f69.plan.md",
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "none",
+    "status": "Requested"
+  }
+}
+```
+Result:
+
+```json
+{
+  "rejected": {}
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="create_plan"><details>
+<summary>Tool use: **create_plan**</summary>
+
+</details></tool-use>
+
+---
+
+_**User**_
+
+Implement the plan as specified, it is attached for your reference. Do NOT edit the plan file itself.
+
+To-do's from the plan have already been created. Do not create them again. Mark them as in_progress as you work, starting with the first one. Don't stop until you have completed all the to-dos.
+
+---
+
+_**Agent (default)**_
+
+Implementing the plan: updating `watch.py`, docs, and tests, then running the test suite.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write">
+<details>
+<summary>Tool use: **todo_write**</summary>
+
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Implement ~/yt-videos root + mkdtemp subdir in watch.py when --out-dir omitted",
+      "id": "watch-default-root",
+      "status": "in_progress"
+    },
+    {
+      "content": "Update SKILL.md and README.md default path wording",
+      "id": "docs-yt-videos",
+      "status": "pending"
+    },
+    {
+      "content": "Add unittest for default dir = home/yt-videos + mkdtemp dir kwarg",
+      "id": "test-default-root",
+      "status": "pending"
+    },
+    {
+      "content": "Run unittest suite",
+      "id": "run-tests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Implement ~/yt-videos root + mkdtemp subdir in watch.py when --out-dir omitted",
+      "id": "watch-default-root",
+      "status": "pending"
+    },
+    {
+      "content": "Update SKILL.md and README.md default path wording",
+      "id": "docs-yt-videos",
+      "status": "pending"
+    },
+    {
+      "content": "Add unittest for default dir = home/yt-videos + mkdtemp dir kwarg",
+      "id": "test-default-root",
+      "status": "pending"
+    },
+    {
+      "content": "Run unittest suite",
+      "id": "run-tests",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md",
+  "pattern": "temp|tmp|out-dir"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md",
+  "pattern": "temp|tmp|out-dir",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "SKILL.md"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/README.md",
+  "pattern": "temp|tmp|working"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/README.md",
+  "pattern": "temp|tmp|working",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "README.md"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll implement:
+- watch.py - change else branch to use ~/yt-videos + mkdtemp
+- Add a new file named "watch.py" that handles watching videos
+- Create a function called "watch" that takes a video URL as input
+- Use the "youtube-dl" library to download videos
+- Save videos to "~/yt-videos" directory
+- Generate a temporary directory using "mkdtemp"
+- Add error handling for download failures
+- Add logging for debugging purposes
+- Add command-line argument parsing for video URLs
+- Add a main function to run the watch function
+- Add a README.md file with instructions on how to use the tool
+- Add a requirements.txt file with dependencies
+- Add a setup.py file to install the tool
+- Add a .gitignore file to exclude unnecessary</details></think>

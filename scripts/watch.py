@@ -44,6 +44,12 @@ def transcript_filename_for_source(source: str) -> str:
     return "transcript.md"
 
 
+def default_watch_work_dir() -> Path:
+    root = Path.home() / "yt-videos"
+    root.mkdir(parents=True, exist_ok=True)
+    return Path(tempfile.mkdtemp(prefix="watch-", dir=str(root)))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         prog="watch",
@@ -55,7 +61,12 @@ def main() -> int:
     ap.add_argument("--fps", type=float, default=None, help="Override auto-fps")
     ap.add_argument("--start", type=str, default=None, help="Range start (SS, MM:SS, or HH:MM:SS)")
     ap.add_argument("--end", type=str, default=None, help="Range end (SS, MM:SS, or HH:MM:SS)")
-    ap.add_argument("--out-dir", type=str, default=None, help="Working directory (default: tmp)")
+    ap.add_argument(
+        "--out-dir",
+        type=str,
+        default=None,
+        help="Working directory (default: ~/yt-videos/watch-*)",
+    )
     ap.add_argument(
         "--no-whisper",
         action="store_true",
@@ -74,7 +85,7 @@ def main() -> int:
     if args.out_dir:
         work = Path(args.out_dir).expanduser().resolve()
     else:
-        work = Path(tempfile.mkdtemp(prefix="watch-"))
+        work = default_watch_work_dir()
     work.mkdir(parents=True, exist_ok=True)
     print(f"[watch] working dir: {work}", file=sys.stderr)
 

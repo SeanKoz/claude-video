@@ -8,6 +8,29 @@ from unittest import mock
 from scripts import watch
 
 
+class DefaultWatchWorkDirTests(unittest.TestCase):
+    def test_default_watch_work_dir_uses_yt_videos_and_mkdtemp(self):
+        with tempfile.TemporaryDirectory() as td:
+            fake_home = Path(td) / "home"
+            fake_home.mkdir()
+            yt_root = fake_home / "yt-videos"
+
+            def fake_mkdtemp(prefix="", dir=None):
+                self.assertEqual(prefix, "watch-")
+                self.assertEqual(dir, str(yt_root))
+                yt_root.mkdir(parents=True, exist_ok=True)
+                run = yt_root / "watch-abc"
+                run.mkdir()
+                return str(run)
+
+            with mock.patch.object(watch.Path, "home", return_value=fake_home):
+                with mock.patch("scripts.watch.tempfile.mkdtemp", side_effect=fake_mkdtemp):
+                    work = watch.default_watch_work_dir()
+
+            self.assertEqual(work, yt_root / "watch-abc")
+            self.assertTrue(yt_root.is_dir())
+
+
 class TranscriptFilenameTests(unittest.TestCase):
     def test_youtube_watch_url_uses_video_id_filename(self):
         source = "https://www.youtube.com/watch?v=epzzALZ8oYo"
