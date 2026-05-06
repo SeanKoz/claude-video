@@ -12,7 +12,7 @@ user-invocable: true
 
 # /watch — Claude watches a video
 
-You don't have a video input; this skill gives you one. A Python script downloads the video, extracts frames as JPEGs, gets a timestamped transcript (native captions first, then Whisper API as fallback), saves that transcript as markdown in the working directory, and prints frame paths. You then `Read` each frame path to see the images and combine them with the transcript to answer the user.
+You don't have a video input; this skill gives you one. A Python script downloads the video, extracts frames as JPEGs, gets a timestamped transcript (native captions first, then Whisper API as fallback), saves transcript + summary markdown in the working directory, and prints frame paths. You then `Read` each frame path to see the images and combine them with the transcript to answer the user.
 
 ## Step 0 — Setup preflight (runs every `/watch` invocation, silent on success)
 
@@ -158,7 +158,7 @@ If you already watched a video this session and the user asks a follow-up, do **
 - Runs `ffmpeg` / `ffprobe` locally to extract frames as JPEGs and, when Whisper is needed, a mono 16 kHz audio clip
 - Sends the extracted audio clip to Groq's Whisper API (`api.groq.com/openai/v1/audio/transcriptions`) when `GROQ_API_KEY` is set (preferred — cheaper, faster)
 - Sends the extracted audio clip to OpenAI's audio transcription API (`api.openai.com/v1/audio/transcriptions`) when `OPENAI_API_KEY` is set and Groq is not, or when `--whisper openai` is forced
-- Writes the downloaded video, frames, audio, and transcript markdown to a working directory under `~/yt-videos/watch-*` by default (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`.
+- Writes the downloaded video, frames, audio, transcript markdown, and `summary.md` to a working directory under `~/yt-videos/watch-*` by default (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`.
 - Reads / creates `~/.config/watch/.env` (mode `0600`) to store the Whisper API key(s) and a `SETUP_COMPLETE` marker. As a fallback, also reads `.env` in the current working directory
 
 **What this skill does NOT do:**

@@ -92,6 +92,12 @@ class TranscriptSaveBehaviorTests(unittest.TestCase):
             transcript_path = work / "yt-epzzALZ8oYo.md"
             self.assertTrue(transcript_path.exists())
             self.assertEqual(transcript_path.read_text(encoding="utf-8"), "[00:00] hello\n")
+            summary_path = work / "summary.md"
+            self.assertTrue(summary_path.exists())
+            summary_content = summary_path.read_text(encoding="utf-8")
+            self.assertIn("# Video Summary", summary_content)
+            self.assertIn("https://www.youtube.com/watch?v=epzzALZ8oYo", summary_content)
+            self.assertIn("[00:00] hello", summary_content)
 
 
 if __name__ == "__main__":
