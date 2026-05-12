@@ -46,7 +46,7 @@ Claude is great at reading and synthesizing — but until now, video was the one
 ## How it works
 
 1. **You paste a video and a question.** URL (anything yt-dlp supports — YouTube, Loom, TikTok, X, Instagram, plus a few hundred more) or a local path (`.mp4`, `.mov`, `.mkv`, `.webm`).
-2. **`yt-dlp` downloads it.** For URLs, into a per-run folder under `~/yt-videos/watch-*` by default (the folder is created if needed). For local files, no download — just probed in place.
+2. **`yt-dlp` downloads it.** For URLs, into a folder under `~/yt-videos/` by default — typically `watch-<videoId>` for YouTube (or a tempfile renamed after download for other sites). For local files, no download — just probed in place.
 3. **`ffmpeg` extracts frames at an auto-scaled rate.** The frame budget is duration-aware: ≤30s gets ~30 frames, 30-60s gets ~40, 1-3min gets ~60, 3-10min gets ~80, longer gets 100 sparsely. Hard ceilings: 2 fps, 100 frames. JPEGs at 512px wide by default — bump with `--resolution 1024` if Claude needs to read on-screen text.
 4. **The transcript comes from one of two places.** First try: `yt-dlp` pulls native captions (manual or auto-generated) from the source. Free, instant, accurate-ish. Fallback: extract a mono 16 kHz audio clip and ship it to Whisper — Groq's `whisper-large-v3` (preferred — cheaper and faster) or OpenAI's `whisper-1`.
 5. **Frames + transcript are handed to Claude.** `watch.py` prints frame paths with `t=MM:SS` markers and the transcript with timestamps, and saves transcript markdown under the work dir. Claude `Read`s each frame in parallel — JPEGs render directly as images in its context.
@@ -151,7 +151,7 @@ Other knobs (passed to `scripts/watch.py`):
 - `--fps F` — override the auto-fps calculation (still capped at 2 fps).
 - `--whisper groq|openai` — force a specific Whisper backend.
 - `--no-whisper` — disable transcription entirely; frames only.
-- `--out-dir DIR` — use this exact working directory (default: unique `watch-*` under `~/yt-videos`).
+- `--out-dir DIR` — use this exact working directory (default: `watch-<id>` / `watch-<stem>` / tempfile under `~/yt-videos`, see `SKILL.md`).
 
 ## Limits
 

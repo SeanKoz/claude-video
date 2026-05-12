@@ -10,6 +10,18 @@ license: MIT
 user-invocable: true        
 ---
 
+## Quick path
+
+1. `python3 "${CLAUDE_SKILL_DIR}/scripts/setup.py" --check` — silent on success; on non-zero exit, run `setup.py` and fix keys per Step 0.
+2. `python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" "<source>"` — add `--start` / `--end` when the user names a time range or a long video needs a window.
+3. **Read** every frame path the script lists (parallel tool calls). Open the transcript markdown path if present.
+4. Answer the user; persist the **exact** same markdown to `<work>/summary.md` via `save_summary.py` (Step 4b). Resolve `<work>` from the report footer `_Work dir: ..._` or from stderr line `WATCH_WORK_DIR=...`.
+5. Optional: `rm -rf <work>` when the user will not need follow-ups.
+
+**Runtime paths:** In **Claude Code** plugin installs, the repo root is exposed as `${CLAUDE_PLUGIN_ROOT}` instead of `${CLAUDE_SKILL_DIR}` — use whichever variable your environment defines when expanding script paths.
+
+**Where files land:** Default output is `<Path.home()>/yt-videos/watch-…`. `Path.home()` is whatever `HOME` is for the process that runs `watch.py` — in a **remote or sandbox** executor this may not be the same as your laptop’s home directory. Inspect stderr for `[watch] working dir:` and `WATCH_WORK_DIR=…` (absolute path). To force a location, pass `--out-dir /your/chosen/path`.
+
 # /watch — Claude watches a video
 
 You don't have a video input; this skill gives you one. A Python script downloads the video, extracts frames as JPEGs, gets a timestamped transcript (native captions first, then Whisper API as fallback), saves transcript markdown in the working directory, and prints frame paths. You then `Read` each frame path to see the images and combine them with the transcript to answer the user. After you compose the user-facing answer, you must save that exact text to `summary.md` in the same work directory (see Step 4b).
@@ -46,7 +58,7 @@ On macOS with Homebrew, it auto-installs `ffmpeg` and `yt-dlp`. On Linux/Windows
 
 **Structured mode (optional):** `python3 "${CLAUDE_SKILL_DIR}/scripts/setup.py" --json` emits `{status, first_run, missing_binaries, whisper_backend, has_api_key, config_file, platform}` where `status` is one of `ready | needs_install | needs_key | needs_install_and_key`. Use this when you need to branch on specifics (e.g. "is this the user's very first run?" → `first_run: true`).
 
-Within a single session, you can skip Step 0 on follow-up `/watch` calls — once `--check` returned 0, nothing about the environment changes between turns.
+Within a single session, you **may** skip Step 0 on follow-up `/watch` calls after `--check` returned 0, unless the user changed their machine (new install, PATH, or keys) or a later step fails with a missing binary.
 
 ## When to use
 
@@ -80,7 +92,7 @@ Optional flags:
 - `--max-frames N` — lower the cap for tighter token budget (e.g. `--max-frames 40`)
 - `--resolution W` — change frame width in px (default 512; bump to 1024 only if the user needs to read on-screen text)
 - `--fps F` — override auto-fps (clamped to 2 fps max)
-- `--out-dir DIR` — use this exact working directory (default: a unique `watch-*` folder under `~/yt-videos`, created if needed)
+- `--out-dir DIR` — use this exact working directory (default under `~/yt-videos`: `watch-<youtubeVideoId>` for standard YouTube URLs, `watch-<sanitizedFileStem>` for local files, a tempfile then renamed to `watch-<yt-dlp id>` for other URLs, with `-2`, `-3`, … if that name already exists)
 - `--whisper groq|openai` — force a specific Whisper backend (default: prefer Groq if both keys exist)
 - `--no-whisper` — disable the Whisper fallback entirely (frames-only if no captions)
 
@@ -106,8 +118,8 @@ Examples:
 # Last 10 seconds of a 1 minute video
 python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" video.mp4 --start 50 --end 60
 
-# Zoom into 2:15 → 2:45 at 3 fps (90 frames)
-python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" "$URL" --start 2:15 --end 2:45 --fps 3
+# Zoom into 2:15 → 2:45 (fps is clamped to 2 max; density comes from the focused window)
+python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" "$URL" --start 2:15 --end 2:45 --fps 2
 
 # From 1h12m to the end of the video
 python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" "$URL" --start 1:12:00
@@ -121,7 +133,9 @@ python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" "$URL" --start 1:12:00
 
 If the user asked a specific question, answer it directly citing timestamps. If they didn't ask anything, summarize what happens in the video — structure, key moments, notable visuals, spoken content.
 
-**Step 4b — persist summary (mandatory when you produce a written answer).** `watch.py` cannot know your final prose summary; only you do. Take the **exact** markdown you are showing the user as your answer (same text as your chat reply) and write it to `<work>/summary.md` using Bash and `save_summary.py`. Read `work` from the report footer line `_Work dir: \`<path>\`_`.
+**Step 4b — persist summary (mandatory when you produce a written answer).** `watch.py` cannot know your final prose summary; only you do. Take the **exact** markdown you are showing the user as your answer (same text as your chat reply) and write it to `<work>/summary.md` using Bash and `save_summary.py`. Resolve `<work>` from the report footer `_Work dir: \`<path>\`_` or stderr `WATCH_WORK_DIR=<path>` (same path).
+
+Checklist: use the absolute path verbatim; use a quoted heredoc (`<<'SUMMARY_EOF'`); paste the full reply without trimming.
 
 Do **not** use `AskUserQuestion` (or anything else) to ask whether to save — always save when you answer.
 
@@ -173,7 +187,7 @@ If you already watched a video this session and the user asks a follow-up, do **
 - Runs `ffmpeg` / `ffprobe` locally to extract frames as JPEGs and, when Whisper is needed, a mono 16 kHz audio clip
 - Sends the extracted audio clip to Groq's Whisper API (`api.groq.com/openai/v1/audio/transcriptions`) when `GROQ_API_KEY` is set (preferred — cheaper, faster)
 - Sends the extracted audio clip to OpenAI's audio transcription API (`api.openai.com/v1/audio/transcriptions`) when `OPENAI_API_KEY` is set and Groq is not, or when `--whisper openai` is forced
-- Writes the downloaded video, frames, audio, and transcript markdown to a working directory under `~/yt-videos/watch-*` by default (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`. After answering, you write `summary.md` in that same directory via `scripts/save_summary.py` (Step 4b).
+- Writes the downloaded video, frames, audio, and transcript markdown to a working directory under `~/yt-videos/` by default (`watch-<videoId>` / `watch-<stem>` / tempfile renamed per `--out-dir` docs above; or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs where the id is known from the URL (watch, shorts, youtu.be, embed), otherwise `transcript.md`. After answering, you write `summary.md` in that same directory via `scripts/save_summary.py` (Step 4b).
 - Reads / creates `~/.config/watch/.env` (mode `0600`) to store the Whisper API key(s) and a `SETUP_COMPLETE` marker. As a fallback, also reads `.env` in the current working directory
 
 **What this skill does NOT do:**

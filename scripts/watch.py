@@ -7,7 +7,9 @@ then Reads each frame path to see the video.
 from __future__ import annotations
 
 import argparse
+import json
 import re
+import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -17,7 +19,7 @@ from urllib.parse import parse_qs, urlparse
 SCRIPT_DIR = Path(__file__).parent.resolve()
 sys.path.insert(0, str(SCRIPT_DIR))
 
-from download import download, is_url  # noqa: E402
+from download import download, is_url, refresh_download_paths  # noqa: E402
 from frames import MAX_FPS, auto_fps, auto_fps_focus, extract, format_time, get_metadata, parse_time  # noqa: E402
 from transcribe import filter_range, format_transcript, parse_vtt  # noqa: E402
 from whisper import load_api_key, transcribe_video  # noqa: E402
@@ -26,28 +28,116 @@ from whisper import load_api_key, transcribe_video  # noqa: E402
 def _youtube_video_id(source: str) -> str | None:
     parsed = urlparse(source)
     host = (parsed.netloc or "").lower()
-    path = parsed.path or ""
+    path = (parsed.path or "").strip("/")
     if host in {"youtu.be", "www.youtu.be"}:
-        return path.lstrip("/") or None
+        if not path:
+            return None
+        return path.split("/")[0] or None
     if host.endswith("youtube.com"):
+        if "/shorts/" in (parsed.path or ""):
+            seg = (parsed.path or "").split("/shorts/", 1)[-1].split("/")[0]
+            return seg or None
+        if "/embed/" in (parsed.path or ""):
+            seg = (parsed.path or "").split("/embed/", 1)[-1].split("/")[0]
+            return seg or None
         values = parse_qs(parsed.query).get("v", [])
         return values[0] if values and values[0] else None
     return None
 
 
+def _sanitize_dir_segment(raw: str, max_len: int = 80) -> str:
+    s = re.sub(r"[^A-Za-z0-9_-]", "", raw)
+    return s[:max_len] if s else ""
+
+
 def transcript_filename_for_source(source: str) -> str:
     video_id = _youtube_video_id(source)
     if video_id:
-        safe_video_id = re.sub(r"[^A-Za-z0-9_-]", "", video_id)
+        safe_video_id = _sanitize_dir_segment(video_id)
         if safe_video_id:
             return f"yt-{safe_video_id}.md"
     return "transcript.md"
 
 
-def default_watch_work_dir() -> Path:
+def _yt_videos_root() -> Path:
     root = Path.home() / "yt-videos"
     root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def pick_unused_watch_dir(root: Path, segment: str) -> Path:
+    """Return ~/yt-videos/watch-<segment> or watch-<segment>-N (first path that does not exist)."""
+    safe = _sanitize_dir_segment(segment) or "unknown"
+    candidates = [root / f"watch-{safe}"]
+    for n in range(2, 10_000):
+        candidates.append(root / f"watch-{safe}-{n}")
+    for p in candidates:
+        if not p.exists():
+            return p
+    raise RuntimeError("could not allocate an unused watch-* directory name")
+
+
+def initial_auto_work_dir(source: str) -> Path:
+    """Pick a working directory before download (YouTube/local: stable name; other URLs: tempfile)."""
+    root = _yt_videos_root()
+    yt_id = _youtube_video_id(source)
+    if yt_id:
+        safe = _sanitize_dir_segment(yt_id)
+        if safe:
+            return pick_unused_watch_dir(root, safe)
+    if not is_url(source):
+        stem = Path(source).expanduser().resolve().stem
+        safe = _sanitize_dir_segment(stem) or "local"
+        return pick_unused_watch_dir(root, safe)
     return Path(tempfile.mkdtemp(prefix="watch-", dir=str(root)))
+
+
+def _work_dir_matches_video_id(work: Path, safe_id: str) -> bool:
+    base = f"watch-{safe_id}"
+    if work.name == base:
+        return True
+    prefix = base + "-"
+    if not work.name.startswith(prefix):
+        return False
+    rest = work.name[len(prefix) :]
+    return rest.isdigit() and int(rest) >= 2
+
+
+def maybe_promote_work_dir(work: Path, source: str, dl: dict) -> Path:
+    """After yt-dlp download, rename tempfile dirs to watch-<extractor id> when needed."""
+    if not is_url(source) or not dl.get("downloaded"):
+        return work
+    info_path = work / "download" / "video.info.json"
+    if not info_path.is_file():
+        return work
+    try:
+        raw = json.loads(info_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return work
+    raw_id = raw.get("id")
+    if not raw_id or not isinstance(raw_id, str):
+        return work
+    safe = _sanitize_dir_segment(raw_id)
+    if not safe:
+        return work
+    if _work_dir_matches_video_id(work, safe):
+        return work
+    root = work.parent
+    target = pick_unused_watch_dir(root, safe)
+    try:
+        work.rename(target)
+    except OSError:
+        try:
+            shutil.move(str(work), str(target))
+        except OSError:
+            return work
+    print(f"[watch] working dir: {target}", file=sys.stderr)
+    return target
+
+
+def default_watch_work_dir() -> Path:
+    """Backward-compatible name: random per-run directory (prefer initial_auto_work_dir(source))."""
+    return Path(tempfile.mkdtemp(prefix="watch-", dir=str(_yt_videos_root())))
 
 
 def main() -> int:
@@ -65,7 +155,7 @@ def main() -> int:
         "--out-dir",
         type=str,
         default=None,
-        help="Working directory (default: ~/yt-videos/watch-*)",
+        help="Working directory (default: ~/yt-videos/watch-<videoId> for YouTube, watch-<stem> for local files, or tempfile then rename for other URLs)",
     )
     ap.add_argument(
         "--no-whisper",
@@ -85,15 +175,29 @@ def main() -> int:
     if args.out_dir:
         work = Path(args.out_dir).expanduser().resolve()
     else:
-        work = default_watch_work_dir()
+        work = initial_auto_work_dir(args.source)
     work.mkdir(parents=True, exist_ok=True)
     print(f"[watch] working dir: {work}", file=sys.stderr)
+    print(
+        f"[watch] Path.home() for this process is {Path.home().resolve()} "
+        "(default layout is <home>/yt-videos/watch-…; use --out-dir for an explicit path).",
+        file=sys.stderr,
+    )
 
     print(
         "[watch] downloading via yt-dlp…" if is_url(args.source) else "[watch] using local file…",
         file=sys.stderr,
     )
     dl = download(args.source, work / "download")
+    path_before = work
+    work = maybe_promote_work_dir(work, args.source, dl)
+    if work is not path_before:
+        try:
+            vp, sp = refresh_download_paths(work)
+        except RuntimeError as exc:
+            raise SystemExit(str(exc)) from exc
+        dl["video_path"] = vp
+        dl["subtitle_path"] = sp
     video_path = dl["video_path"]
 
     meta = get_metadata(video_path)
@@ -264,6 +368,7 @@ def main() -> int:
     print()
     print("---")
     print(f"_Work dir: `{work}` — delete when done._")
+    print(f"WATCH_WORK_DIR={work}", file=sys.stderr)
 
     return 0
 

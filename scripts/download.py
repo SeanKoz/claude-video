@@ -113,6 +113,16 @@ def download_url(url: str, out_dir: Path) -> dict:
     }
 
 
+def refresh_download_paths(work: Path) -> tuple[str, str | None]:
+    """Re-resolve video and subtitle under ``work/download`` after ``work`` was renamed in place."""
+    d = work / "download"
+    video = _pick_video(d)
+    subtitle = _pick_subtitle(d)
+    if video is None:
+        raise RuntimeError(f"No video file found under {d}")
+    return str(video), str(subtitle) if subtitle else None
+
+
 def download(source: str, out_dir: Path) -> dict:
     if is_url(source):
         return download_url(source, out_dir)

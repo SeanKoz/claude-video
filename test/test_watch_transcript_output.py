@@ -31,6 +31,65 @@ class DefaultWatchWorkDirTests(unittest.TestCase):
             self.assertTrue(yt_root.is_dir())
 
 
+class InitialAutoWorkDirTests(unittest.TestCase):
+    def test_youtube_watch_url_uses_video_id_dir_name(self):
+        with tempfile.TemporaryDirectory() as td:
+            fake_home = Path(td) / "home"
+            fake_home.mkdir()
+            yt_root = fake_home / "yt-videos"
+            with mock.patch.object(watch.Path, "home", return_value=fake_home):
+                work = watch.initial_auto_work_dir("https://www.youtube.com/watch?v=epzzALZ8oYo")
+            self.assertEqual(work, yt_root / "watch-epzzALZ8oYo")
+
+    def test_youtube_shorts_url_uses_video_id_dir_name(self):
+        with tempfile.TemporaryDirectory() as td:
+            fake_home = Path(td) / "home"
+            fake_home.mkdir()
+            yt_root = fake_home / "yt-videos"
+            with mock.patch.object(watch.Path, "home", return_value=fake_home):
+                work = watch.initial_auto_work_dir("https://www.youtube.com/shorts/AbCdEfGhIjK")
+            self.assertEqual(work, yt_root / "watch-AbCdEfGhIjK")
+
+    def test_collision_appends_numeric_suffix(self):
+        with tempfile.TemporaryDirectory() as td:
+            fake_home = Path(td) / "home"
+            fake_home.mkdir()
+            yt_root = fake_home / "yt-videos"
+            yt_root.mkdir(parents=True, exist_ok=True)
+            (yt_root / "watch-epzzALZ8oYo").mkdir()
+            with mock.patch.object(watch.Path, "home", return_value=fake_home):
+                work = watch.initial_auto_work_dir("https://www.youtube.com/watch?v=epzzALZ8oYo")
+            self.assertEqual(work, yt_root / "watch-epzzALZ8oYo-2")
+
+    def test_non_youtube_url_uses_mkdtemp(self):
+        with tempfile.TemporaryDirectory() as td:
+            fake_home = Path(td) / "home"
+            fake_home.mkdir()
+            yt_root = fake_home / "yt-videos"
+
+            def fake_mkdtemp(prefix="", dir=None):
+                yt_root.mkdir(parents=True, exist_ok=True)
+                run = yt_root / "watch-provisional"
+                run.mkdir()
+                return str(run)
+
+            with mock.patch.object(watch.Path, "home", return_value=fake_home):
+                with mock.patch("scripts.watch.tempfile.mkdtemp", side_effect=fake_mkdtemp):
+                    work = watch.initial_auto_work_dir("https://vimeo.com/123456")
+            self.assertEqual(work, yt_root / "watch-provisional")
+
+    def test_local_path_uses_file_stem(self):
+        with tempfile.TemporaryDirectory() as td:
+            fake_home = Path(td) / "home"
+            fake_home.mkdir()
+            yt_root = fake_home / "yt-videos"
+            local = Path(td) / "my clip.mp4"
+            local.write_bytes(b"")
+            with mock.patch.object(watch.Path, "home", return_value=fake_home):
+                work = watch.initial_auto_work_dir(str(local))
+            self.assertEqual(work, yt_root / "watch-myclip")
+
+
 class TranscriptFilenameTests(unittest.TestCase):
     def test_youtube_watch_url_uses_video_id_filename(self):
         source = "https://www.youtube.com/watch?v=epzzALZ8oYo"
@@ -39,6 +98,10 @@ class TranscriptFilenameTests(unittest.TestCase):
     def test_non_youtube_url_uses_default_filename(self):
         source = "https://vimeo.com/123456"
         self.assertEqual(watch.transcript_filename_for_source(source), "transcript.md")
+
+    def test_youtube_shorts_url_uses_video_id_filename(self):
+        source = "https://www.youtube.com/shorts/abcABC12_3"
+        self.assertEqual(watch.transcript_filename_for_source(source), "yt-abcABC12_3.md")
 
 
 class TranscriptSaveBehaviorTests(unittest.TestCase):

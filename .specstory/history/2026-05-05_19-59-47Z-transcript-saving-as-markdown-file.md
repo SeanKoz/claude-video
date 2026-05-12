@@ -4208,3 +4208,676 @@ _**Agent (default)**_
 <summary>Tool use: **read_file_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll use importlib.util.spec_from_file_location for saving summaries in tests to avoid package issues, or subprocess with the Python 3 path to the script.</details></think>
+
+_**Agent (default)**_
+
+Applying changes: stripping fake summary logic from `watch.py`, adding `save_summary.py`, and updating docs and tests.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/save_summary.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write">
+<details>
+<summary>Tool use: **todo_write**</summary>
+
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Remove build_summary_markdown + automatic summary.md writes/prints from watch.py",
+      "id": "remove-fake-summary-watch",
+      "status": "completed"
+    },
+    {
+      "content": "Add scripts/save_summary.py (stdin -\u003e work/summary.md)",
+      "id": "add-save-summary-script",
+      "status": "completed"
+    },
+    {
+      "content": "Update SKILL.md/commands/watch.md/README.md for post-answer save_summary.py flow (no confirmation)",
+      "id": "skill-docs-mandatory-save",
+      "status": "in_progress"
+    },
+    {
+      "content": "Adjust transcript tests; add test_save_summary.py",
+      "id": "tests-adjust",
+      "status": "pending"
+    },
+    {
+      "content": "Run python3 -m unittest discover -s test",
+      "id": "run-unittests",
+      "status": "pending"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Remove build_summary_markdown + automatic summary.md writes/prints from watch.py",
+      "id": "remove-fake-summary-watch",
+      "status": "in_progress"
+    },
+    {
+      "content": "Add scripts/save_summary.py (stdin -\u003e work/summary.md)",
+      "id": "add-save-summary-script",
+      "status": "pending"
+    },
+    {
+      "content": "Update SKILL.md/commands/watch.md/README.md for post-answer save_summary.py flow (no confirmation)",
+      "id": "skill-docs-mandatory-save",
+      "status": "pending"
+    },
+    {
+      "content": "Adjust transcript tests; add test_save_summary.py",
+      "id": "tests-adjust",
+      "status": "pending"
+    },
+    {
+      "content": "Run python3 -m unittest discover -s test",
+      "id": "run-unittests",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Update SKILL.md to revise the introduction on line 15.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/commands/watch.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/README.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Fix README step 1 - I changed the numbering and need to verify "1." is correct.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/README.md</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+README looks good. The StrReplace test file has been updated to remove summary assertions.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_watch_transcript_output.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_save_summary.py</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: /Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/README.md</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The SKILL.md file on line 169 may need an update regarding persistence settings. The SKILL.md file should be checked for outdated references to summary functionality in the README. Tests include save_summary and watch file functionality with a total of 7 tests across 3 classes. The save_summary function correctly handles empty stdin and newline characters. Unit tests are expected to run successfully.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "glob": "*.{py,md}",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video",
+  "pattern": "summary\\.md|Saved summary|build_summary"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video",
+  "pattern": "summary\\.md|Saved summary|build_summary",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "./test/README.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": "./test/test_save_summary.py"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./README.md"
+    },
+    {
+      "matchCount": 1,
+      "uri": "./commands/watch.md"
+    },
+    {
+      "matchCount": 4,
+      "uri": "./SKILL.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "./scripts/save_summary.py"
+    },
+    {
+      "matchCount": 49,
+      "uri": "./.specstory/history/2026-05-05_19-59-47Z-transcript-saving-as-markdown-file.md"
+    }
+  ],
+  "totalFiles": 7,
+  "totalMatches": 61
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: python3 -m unittest discover -s test</summary>
+
+```bash
+python3 -m unittest discover -s test
+```
+
+```
+......[watch] working dir: /private/var/folders/tk/jcz8m9ns53l5j15vpr7dbvbh0000gn/T/watch-test-08n88srn
+[watch] downloading via yt-dlp…
+[watch] extracting ~10 frames at 2.000 fps over full 5.0s…
+[watch] transcript saved: /private/var/folders/tk/jcz8m9ns53l5j15vpr7dbvbh0000gn/T/watch-test-08n88srn/yt-epzzALZ8oYo.md
+.
+----------------------------------------------------------------------
+Ran 7 tests in 0.056s
+
+OK
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+All tests pass. Mark todos complete.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints">
+<details>
+<summary>Tool use: **read_lints**</summary>
+
+
+Parameters:
+
+```json
+{
+  "paths": [
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py",
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/save_summary.py",
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_save_summary.py",
+    "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md"
+  ]
+}
+```
+Result:
+
+```json
+{
+  "linterErrorsByFile": [
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py"
+    },
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/save_summary.py"
+    },
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/test/test_save_summary.py"
+    },
+    {
+      "relativeWorkspacePath": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md"
+    }
+  ]
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="read_lints"><details>
+<summary>Tool use: **read_lints**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write">
+<details>
+<summary>Tool use: **todo_write**</summary>
+
+
+Parameters:
+
+```json
+{
+  "merge": true
+}
+```
+Result:
+
+```json
+{
+  "finalTodos": [
+    {
+      "content": "Remove build_summary_markdown + automatic summary.md writes/prints from watch.py",
+      "id": "remove-fake-summary-watch",
+      "status": "completed"
+    },
+    {
+      "content": "Add scripts/save_summary.py (stdin -\u003e work/summary.md)",
+      "id": "add-save-summary-script",
+      "status": "completed"
+    },
+    {
+      "content": "Update SKILL.md/commands/watch.md/README.md for post-answer save_summary.py flow (no confirmation)",
+      "id": "skill-docs-mandatory-save",
+      "status": "completed"
+    },
+    {
+      "content": "Adjust transcript tests; add test_save_summary.py",
+      "id": "tests-adjust",
+      "status": "completed"
+    },
+    {
+      "content": "Run python3 -m unittest discover -s test",
+      "id": "run-unittests",
+      "status": "completed"
+    }
+  ],
+  "initialTodos": [
+    {
+      "content": "Remove build_summary_markdown + automatic summary.md writes/prints from watch.py",
+      "id": "remove-fake-summary-watch",
+      "status": "completed"
+    },
+    {
+      "content": "Add scripts/save_summary.py (stdin -\u003e work/summary.md)",
+      "id": "add-save-summary-script",
+      "status": "completed"
+    },
+    {
+      "content": "Update SKILL.md/commands/watch.md/README.md for post-answer save_summary.py flow (no confirmation)",
+      "id": "skill-docs-mandatory-save",
+      "status": "in_progress"
+    },
+    {
+      "content": "Adjust transcript tests; add test_save_summary.py",
+      "id": "tests-adjust",
+      "status": "pending"
+    },
+    {
+      "content": "Run python3 -m unittest discover -s test",
+      "id": "run-unittests",
+      "status": "pending"
+    }
+  ],
+  "success": true,
+  "wasMerge": true
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="todo_write"><details>
+<summary>Tool use: **todo_write**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+All tasks have been completed. Here is a concise summary for the user.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py",
+  "pattern": "summary"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/scripts/watch.py",
+  "pattern": "summary",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Here’s what was implemented (plan file untouched, all related to-dos completed).
+
+### Cause
+`watch.py` runs **before** your chat answer exists, so it could only fake `summary.md` by wrapping the **transcript** in headings. The real “console summary” is produced **after** frames + transcript are in context.
+
+### Code
+- **`scripts/watch.py`**  
+  - Removed `build_summary_markdown`, all `summary.md` writes, stderr “summary saved”, and the `Saved summary:` line in the report.
+- **`scripts/save_summary.py`** (new)  
+  - `python3 save_summary.py <work-dir>` reads **stdin** (UTF-8) and writes `<work-dir>/summary.md`.  
+  - Adds a trailing newline only if the body does not already end with one.
+
+### Skill / docs
+- **`SKILL.md`**  
+  - New **Step 4b — persist summary**: mandatory Bash + quoted heredoc + `save_summary.py`, using `work` from `_Work dir: \`...\`_`.  
+  - Explicit: **do not** ask whether to save.  
+  - Security + bundled scripts updated so transcript = `watch.py`, summary = `save_summary.py` after the answer.
+- **`commands/watch.md`** — pipeline ends with `save_summary.py` after the answer.  
+- **`README.md`** — “How it works” step 7 explains summary on disk via `save_summary.py`, not `watch.py`.
+
+### Tests
+- **`test/test_watch_transcript_output.py`** — no longer expects `summary.md` from `watch.main()`.  
+- **`test/test_save_summary.py`** — subprocess tests for `save_summary.py` (happy path, newline append, usage error).  
+- **`test/README.md`** — notes `save_summary.py` coverage.
+
+### Validation
+`python3 -m unittest discover -s test` → **7 tests, OK**.
+
+**Usage for the agent:** after the user-facing reply is written, run the heredoc example in `SKILL.md` Step 4b with the real work dir and the **exact** markdown you showed the user.
+
+---
+
+_**User**_
+
+Where is the prompt that generates the summary?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to know where the prompt is located that generates the summary for the watch/video skill.</details></think>
+
+_**Agent (default)**_
+
+There isn’t a separate “summary generator” script or API prompt in this repo. The summary is whatever the **model writes as its normal reply** after following the skill instructions in `SKILL.md`.
+
+The closest thing to a “prompt” for that behavior is **Step 4 — answer the user** (and the surrounding pipeline), which tells the model how to answer vs. summarize when the user didn’t ask a specific question:
+
+```118:122:/Users/seankozlowski/.claude/plugins/marketplaces/claude-video/SKILL.md
+**Step 4 — answer the user.** You now have two streams of evidence:
+- **Frames** — what's on screen at each timestamp
+- **Transcript** — what's said at each timestamp. The report's header shows the source (`captions` = yt-dlp pulled native subs; `whisper (groq)` or `whisper (openai)` = transcribed by API).
+
+If the user asked a specific question, answer it directly citing timestamps. If they didn't ask anything, summarize what happens in the video — structure, key moments, notable visuals, spoken content.
+```
+
+Persisting that reply to disk is **Step 4b** (same file), which points at `save_summary.py` — that script only **stores** text; it does **not** generate the summary.
