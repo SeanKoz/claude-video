@@ -12,7 +12,7 @@ user-invocable: true
 
 # /watch — Claude watches a video
 
-You don't have a video input; this skill gives you one. A Python script downloads the video, extracts frames as JPEGs, gets a timestamped transcript (native captions first, then Whisper API as fallback), saves transcript + summary markdown in the working directory, and prints frame paths. You then `Read` each frame path to see the images and combine them with the transcript to answer the user.
+You don't have a video input; this skill gives you one. A Python script downloads the video, extracts frames as JPEGs, gets a timestamped transcript (native captions first, then Whisper API as fallback), saves transcript markdown in the working directory, and prints frame paths. You then `Read` each frame path to see the images and combine them with the transcript to answer the user. After you compose the user-facing answer, you must save that exact text to `summary.md` in the same work directory (see Step 4b).
 
 ## Step 0 — Setup preflight (runs every `/watch` invocation, silent on success)
 
@@ -121,6 +121,21 @@ python3 "${CLAUDE_SKILL_DIR}/scripts/watch.py" "$URL" --start 1:12:00
 
 If the user asked a specific question, answer it directly citing timestamps. If they didn't ask anything, summarize what happens in the video — structure, key moments, notable visuals, spoken content.
 
+**Step 4b — persist summary (mandatory when you produce a written answer).** `watch.py` cannot know your final prose summary; only you do. Take the **exact** markdown you are showing the user as your answer (same text as your chat reply) and write it to `<work>/summary.md` using Bash and `save_summary.py`. Read `work` from the report footer line `_Work dir: \`<path>\`_`.
+
+Do **not** use `AskUserQuestion` (or anything else) to ask whether to save — always save when you answer.
+
+Example (replace `WORK` with the absolute path from the report):
+
+```bash
+python3 "${CLAUDE_SKILL_DIR}/scripts/save_summary.py" "WORK" <<'SUMMARY_EOF'
+Your full user-facing answer goes here, verbatim.
+Same headings, bullets, and timestamps you used in chat.
+SUMMARY_EOF
+```
+
+Use a quoted heredoc delimiter (`<<'SUMMARY_EOF'`) so the shell does not expand `$` or backticks inside the answer.
+
 **Step 5 — clean up.** The script prints a working directory at the end. If the user isn't going to ask follow-ups about this video, delete it with `rm -rf <dir>`. If they might, leave it in place.
 
 ## Transcription
@@ -158,7 +173,7 @@ If you already watched a video this session and the user asks a follow-up, do **
 - Runs `ffmpeg` / `ffprobe` locally to extract frames as JPEGs and, when Whisper is needed, a mono 16 kHz audio clip
 - Sends the extracted audio clip to Groq's Whisper API (`api.groq.com/openai/v1/audio/transcriptions`) when `GROQ_API_KEY` is set (preferred — cheaper, faster)
 - Sends the extracted audio clip to OpenAI's audio transcription API (`api.openai.com/v1/audio/transcriptions`) when `OPENAI_API_KEY` is set and Groq is not, or when `--whisper openai` is forced
-- Writes the downloaded video, frames, audio, transcript markdown, and `summary.md` to a working directory under `~/yt-videos/watch-*` by default (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`.
+- Writes the downloaded video, frames, audio, and transcript markdown to a working directory under `~/yt-videos/watch-*` by default (or `--out-dir` if specified) so Claude can `Read` them. Transcript filename is `yt-<videoId>.md` for YouTube URLs with a `v` parameter, otherwise `transcript.md`. After answering, you write `summary.md` in that same directory via `scripts/save_summary.py` (Step 4b).
 - Reads / creates `~/.config/watch/.env` (mode `0600`) to store the Whisper API key(s) and a `SETUP_COMPLETE` marker. As a fallback, also reads `.env` in the current working directory
 
 **What this skill does NOT do:**
@@ -168,6 +183,6 @@ If you already watched a video this session and the user asks a follow-up, do **
 - Does not log, cache, or write API keys to stdout, stderr, or output files
 - Does not persist anything outside the working directory (default under `~/yt-videos`), `~/.config/watch/.env`, and the created `~/yt-videos` folder when used — clean up the per-run working directory when you're done (Step 5)
 
-**Bundled scripts:** `scripts/watch.py` (entry point), `scripts/download.py` (yt-dlp wrapper), `scripts/frames.py` (ffmpeg frame extraction), `scripts/transcribe.py` (caption selection + Whisper orchestration), `scripts/whisper.py` (Groq / OpenAI clients), `scripts/setup.py` (preflight + installer)
+**Bundled scripts:** `scripts/watch.py` (entry point), `scripts/download.py` (yt-dlp wrapper), `scripts/frames.py` (ffmpeg frame extraction), `scripts/transcribe.py` (caption selection + Whisper orchestration), `scripts/whisper.py` (Groq / OpenAI clients), `scripts/setup.py` (preflight + installer), `scripts/save_summary.py` (stdin → `summary.md` after your answer)
 
 Review scripts before first use to verify behavior.

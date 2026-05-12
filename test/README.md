@@ -11,3 +11,5 @@ This suite includes transcript output coverage for `scripts/watch.py`, including
 - Default filename fallback (`transcript.md`)
 - Transcript markdown file persistence while keeping transcript output on stdout
 - Default working directory parent `~/yt-videos` with per-run `watch-*` subfolders
+
+It also covers `scripts/save_summary.py` (stdin → `summary.md` in a work directory).

@@ -50,35 +50,6 @@ def default_watch_work_dir() -> Path:
     return Path(tempfile.mkdtemp(prefix="watch-", dir=str(root)))
 
 
-def build_summary_markdown(
-    source: str,
-    transcript_text: str | None,
-    transcript_source: str | None,
-    transcript_segments: list[dict],
-) -> str:
-    lines = [
-        "# Video Summary",
-        "",
-        f"- Source: {source}",
-    ]
-    if transcript_text:
-        lines.append(f"- Transcript source: {transcript_source or 'captions'}")
-        lines.append(f"- Transcript segments: {len(transcript_segments)}")
-        lines.extend(["", "## Summary", "", transcript_text])
-    else:
-        lines.extend(
-            [
-                "- Transcript: unavailable",
-                "",
-                "## Summary",
-                "",
-                "No transcript was available for this video run, so only frames could be analyzed.",
-            ]
-        )
-    lines.append("")
-    return "\n".join(lines)
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(
         prog="watch",
@@ -212,10 +183,6 @@ def main() -> int:
         transcript_path = work / transcript_filename_for_source(args.source)
         transcript_path.write_text(transcript_text + "\n", encoding="utf-8")
         print(f"[watch] transcript saved: {transcript_path}", file=sys.stderr)
-    summary_text = build_summary_markdown(args.source, transcript_text, transcript_source, transcript_segments)
-    summary_path = work / "summary.md"
-    summary_path.write_text(summary_text + "\n", encoding="utf-8")
-    print(f"[watch] summary saved: {summary_path}", file=sys.stderr)
 
     print()
     print("# watch: video report")
@@ -272,7 +239,6 @@ def main() -> int:
     print()
     if transcript_path:
         print(f"Saved markdown: `{transcript_path}`")
-        print(f"Saved summary: `{summary_path}`")
         print()
     if transcript_text:
         label = transcript_source or "captions"
